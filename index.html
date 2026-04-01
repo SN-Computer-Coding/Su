@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subha Aluth Avuruddak Wewa! | SN Computer Coding</title>
+    <style>
+        :root {
+            --avurudu-red: #b91d1d;
+            --gold-gradient: linear-gradient(45deg, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
+            --gold: #d4af37;
+            --cream: #fffdf5;
+            --dark-bg: #0f0f0f;
+        }
+
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: var(--dark-bg);
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+        }
+
+        .book-wrapper {
+            position: relative;
+            width: 85vw;
+            max-width: 320px;
+            height: 480px;
+            perspective: 1500px;
+        }
+
+        .book {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 1.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+            transform-origin: left center;
+            z-index: 2;
+            cursor: pointer;
+        }
+
+        .book.open {
+            transform: rotateY(-160deg);
+        }
+
+        .page {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 4px 15px 15px 4px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 30px;
+            backface-visibility: hidden;
+            box-shadow: 10px 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .cover-front {
+            background: linear-gradient(135deg, var(--avurudu-red), #7f1d1d);
+            color: var(--gold);
+            z-index: 2;
+            border: 5px solid transparent;
+            border-image: var(--gold-gradient) 1;
+            text-align: center;
+        }
+
+        .inner-content {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--cream);
+            border-radius: 4px 15px 15px 4px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 25px;
+            z-index: 1;
+            border: 2px solid var(--gold);
+        }
+
+        .sun-symbol {
+            font-size: 60px;
+            margin-bottom: 10px;
+            filter: drop-shadow(0 0 15px var(--gold));
+            animation: rotateSun 15s linear infinite;
+        }
+
+        @keyframes rotateSun {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .footer-branding {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            color: #888;
+            font-size: 11px;
+            font-family: monospace;
+            text-transform: uppercase;
+        }
+
+        .click-hint {
+            margin-top: 40px;
+            font-size: 0.7rem;
+            color: white;
+            opacity: 0.7;
+            letter-spacing: 3px;
+        }
+    </style>
+</head>
+<body>
+
+    <audio id="rathinchaSound" preload="auto">
+        <source src="https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="book-wrapper">
+        <div class="inner-content">
+            <h2>Sinhala And Tamil New Year!</h2>
+            <p><b>සිංහල සහ දෙමළ සුභ අලුත් අවුරුද්දක් වේවා!</b></p>
+            <p><b> ඔබ සැමට සාමය සතුට පිරි සෞභාග්‍යමත් සුබ අලුත් අවුරැද්දක් වේවා </b></p>
+            <hr style="width: 60%; border: 0.5px solid var(--gold); margin: 15px 0;">
+            <div style="font-size: 2rem;">🧨🎆✨</div>
+        </div>
+
+        <div class="book" id="avuruduBook">
+            <div class="page cover-front">
+                <div class="sun-symbol">☀️</div>
+                <h1>2026</h1>
+                <p>Tap to Open</p>
+                <div class="click-hint">Sinhala And Tamil New Year Wish Card</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-branding">
+        Created by SN Computer Coding 💻
+    </div>
+
+    <script>
+        const sound = document.getElementById('rathinchaSound');
+        const book = document.getElementById('avuruduBook');
+
+        // This function handles the click and forces the audio to play
+        book.addEventListener('click', function() {
+            if (!book.classList.contains('open')) {
+                // Play sound immediately on click
+                sound.play().catch(function(error) {
+                    console.log("Audio play failed:", error);
+                });
+            }
+            book.classList.toggle('open');
+        });
+
+        // Pre-load audio on first touch for mobile devices
+        document.body.addEventListener('touchstart', function() {
+            sound.load();
+        }, {once: true});
+    </script>
+
+</body>
+</html>
